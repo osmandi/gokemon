@@ -4,9 +4,9 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func init() {
+var pokemons []Pokemon
 
-	var pokemons []Pokemon
+func init() {
 
 	pokemon1 := Pokemon{1, "Pikachu", "", []Type{TypeDark}, 89}
 	pokemon2 := Pokemon{2, "Pikachu2", "", []Type{TypeDark}, 89}
@@ -21,6 +21,7 @@ func main() {
 
 	r.GET("/", getPokemons)
 	r.GET("/:id", getPokemon)
+	r.POST("/create", createPokemon)
 	r.Run()
 
 }
