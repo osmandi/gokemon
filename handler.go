@@ -9,7 +9,6 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-// TODO: Implementar Put, Delete
 // TODO: Usar SQlite
 // TODO: Hacer lo mismo en Gorilla, Echo y Beego
 
@@ -48,4 +47,45 @@ func createPokemon(c *gin.Context) {
 	pokemons = append(pokemons, pokemon)
 
 	c.JSON(200, pokemon)
+}
+
+func deletePokemon(c *gin.Context) {
+
+	id := c.Param("id")
+	idInt, _ := strconv.Atoi(id)
+	fmt.Println(reflect.TypeOf(idInt))
+
+	for i, pokemon := range pokemons {
+		if pokemon.PokedexNumber == idInt {
+			pokemons = append(pokemons[:i], pokemons[i+1])
+			c.JSON(200, gin.H{
+				"msg": "Pokemon deleted",
+			})
+			return
+		}
+	}
+
+	c.JSON(400, gin.H{
+		"msg": "Not found",
+	})
+}
+
+func levelUpPokemon(c *gin.Context) {
+
+	id := c.Param("id")
+	idInt, _ := strconv.Atoi(id)
+	fmt.Println(reflect.TypeOf(idInt))
+
+	for i, pokemon := range pokemons {
+		if pokemon.PokedexNumber == idInt {
+			pokemon.Level += 20
+			c.SecureJSON(http.StatusOK, pokemon)
+			pokemons[i] = pokemon
+			return
+		}
+	}
+
+	c.JSON(400, gin.H{
+		"msg": "not found",
+	})
 }
