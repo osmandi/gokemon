@@ -22,7 +22,7 @@ func main() {
 	r.GET("/", getPokemons)
 	r.GET("/:id", getPokemon)
 	r.POST("/create", createPokemon)
-	r.DELETE("/delete/:id", deletePokemon)
+	r.DELETE("/:id", deletePokemon)
 	r.PUT("/:id", levelUpPokemon)
 	r.Run()
 
